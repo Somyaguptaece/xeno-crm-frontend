@@ -44,12 +44,7 @@ api.interceptors.response.use(
       error.response?.status === 401
     ) {
 
-      localStorage.removeItem(
-        "token"
-      );
-
-      window.location.href =
-        "/login";
+      console.log("401 ignored");
 
     }
 
