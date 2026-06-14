@@ -19,42 +19,54 @@ function Register() {
     setShowPassword] =
     useState(false);
 
-  const register =
-    async (e) => {
+ const register = async (e) => {
 
-      e.preventDefault();
+  e.preventDefault();
 
-      try {
+  try {
 
-        await api.post(
-          "/auth/register",
-          form
-        );
+    console.log("1. Before API");
 
-        toast.success(
-          "OTP Sent To Email"
-        );
+    const response =
+      await api.post(
+        "/auth/register",
+        form
+      );
 
-        navigate(
-          "/verify-otp",
-          {
-            state: {
-              email:
-                form.email,
-            },
-          }
-        );
+    console.log("2. After API");
+    console.log(response);
 
-      } catch (error) {
+    toast.success(
+      "OTP Sent To Email"
+    );
 
-        toast.error(
-          error.response?.data?.message ||
-          "Registration Failed"
-        );
+    console.log("3. Before Navigate");
 
+    navigate(
+      "/verify-otp",
+      {
+        state: {
+          email: form.email,
+        },
       }
+    );
 
-    };
+    console.log("4. After Navigate");
+
+  } catch (error) {
+
+    console.log("REGISTER ERROR");
+    console.log(error);
+    console.log(error.response);
+
+    toast.error(
+      error.response?.data?.message ||
+      "Registration Failed"
+    );
+
+  }
+
+};
 
   return (
 
