@@ -26,9 +26,8 @@ useEffect(() => {
 
   fetchStats();
 
-  const socket =
-io(
-  "https://xeno-crm-backend.onrender.com"
+const socket = io(
+  "https://xeno-crm-backend-aanz.onrender.com"
 );
 
   socket.on(
