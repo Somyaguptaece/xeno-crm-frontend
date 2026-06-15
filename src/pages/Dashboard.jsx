@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { io } from "socket.io-client";
 import {
   ResponsiveContainer,
   LineChart,
@@ -25,17 +26,30 @@ useEffect(() => {
 
   fetchStats();
 
-  const interval =
-    setInterval(() => {
+  const socket =
+io(
+  "https://xeno-crm-backend.onrender.com"
+);
+
+  socket.on(
+    "campaign-update",
+    (data) => {
+
+      console.log(
+        "LIVE UPDATE:",
+        data
+      );
 
       fetchStats();
 
-    },10000);
+    }
+  );
 
-  return () =>
-    clearInterval(
-      interval
-    );
+  return () => {
+
+    socket.disconnect();
+
+  };
 
 }, []);
 

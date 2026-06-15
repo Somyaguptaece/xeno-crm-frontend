@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import jsPDF from "jspdf";
-
+import { io } from "socket.io-client";
 import {
   ResponsiveContainer,
   BarChart,
@@ -34,6 +34,30 @@ function Analytics() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+
+  const socket =
+    io(
+      "https://YOUR-BACKEND-URL.onrender.com"
+    );
+
+  socket.on(
+    "campaign-update",
+    () => {
+
+      fetchData();
+
+    }
+  );
+
+  return () => {
+
+    socket.disconnect();
+
+  };
+
+}, []);
 
  const fetchData = async () => {
   try {
